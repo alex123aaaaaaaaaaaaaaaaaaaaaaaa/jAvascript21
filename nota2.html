@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <title>Nota final de asignatura</title>
+    <style>
+        input {margin:10px;}
+    </style>
+</head>
+<body>
+    <h1>Cálculo de la nota final de una asignatura</h1>
+    <!-- entrada de datos por formulario -->
+    <form action="">
+        <label for="worPpress">Nota Wordpress:</label>
+        <input type="text" id="wordPress"><br>
+        <label for="js">Nota JS:</label>
+        <input type="text" id="js"><br>
+        <!-- LOS TRABAJOS SON AHORA EXCLUYENTES, TIENEN UN RADIO BUTTON
+             SI ELIGES UNO, SE DESACTIVA EL OTRO :
+             - EL ID DE TODAS LAS OPCIONES A ELEGIR DEBE SER EL MISMO
+             - EL NAME TAMBIÉN 
+             - OJO: HAY QUE PONER UN VALUE DIFERENTE EN CADA OPCIÓN
+               EN ESTE CASO: trabajowp y trabajojs
+            -->
+        <input type="radio" value="trabajowp" id="trabajo" name="trabajo">
+        <label for="trabajowp">Trabajo extra de Wordpress</label><br>
+        <input type="radio" value="trabajojs" id="trabajo2" name="trabajo" >
+        <label for="trabajojs">Trabajo extra de JavaScript</label><br>
+    </form>
+    <!-- activación del javascript -->
+    <button onclick="calculoNota()">Calcula!</button>
+    <!-- aquí saldrá el resultado-->
+    <p id="resultado"></p>
+    <p id="indicacion"></p>
+    <img src="./WordPress_blue_logo.svg.png" alt="wp" id="wp">
+    <script>
+        /* VERSIÓN CON PUNTOS ADICIONALES POR TRABAJO A ELEGIR:
+           - PUNTO POR TRABAJO EN WP O
+           - PUNTO POR TRABAJO EN JS
+           UN RADIO BUTTON ME OBLIGA A ESCOGER UNO DE LOS DOS 
+           TRABAJOS */
+        function calculoNota(){
+           /* entrada de datos */
+           let notaWordpress=Number(document.getElementById("wordPress").value);
+           let notaJs=Number(document.getElementById("js").value);
+
+           // cuando cojo el dato de un radio button, cojo el value tb
+           // solo es un dato, trabajo, pero tiene 2 valores posibles
+
+           let trabajo=document.getElementById("trabajo").value;
+           
+
+           /* calculo de nota */
+           let notaFinal=(75*notaWordpress+25*notaJs)/100;
+
+           /* vamos a ver si hay trabajos adicionales */
+           if (trabajo=="trabajowp"){  // si has marcado trabajojs
+               notaFinal++;
+               alert("programa no funciona....sin terminar");
+           } else {
+               if (trabajo=="trabajojs") { // si has marcado trabajowp
+                   notaFinal++;
+                   alert("programa no funciona....sin terminar");
+               } // si no has pulsado ni uno ni otro, no suma nada
+           }
+
+
+           /* comprobamos que el resultado está dentro del rango */
+
+           if (notaFinal>10) {
+               notaFinal=10;
+           }
+
+           /* salida de resultados */
+
+           document.getElementById("resultado").innerHTML=
+           "La nota final es: "+notaFinal;
+
+           if (notaFinal>=5){
+            document.getElementById("indicacion").innerHTML=
+           "Enhorabuena, estás aprobado!";
+           } else {
+            document.getElementById("indicacion").innerHTML=
+           "Ánimo, tendrás que volver a intentarlo";
+           }
+        }
+    </script>
+</body>
+</html>
